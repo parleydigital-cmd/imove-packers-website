@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get a Quote | iMove Packers and Movers</title>
+  <link rel="icon" href="images/logo.webp">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="section-alt">
+
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo"><img src="images/logo.webp" alt="iMove Packers & Movers" class="logo-img"></a>
+      <div class="mobile-toggle"><span></span><span></span><span></span></div>
+      <div class="nav-menu">
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About Us</a>
+          <a href="services.html">Services</a>
+          <a href="pricing.html" class="active">Get Quote</a>
+          <a href="testimonials.html">Testimonials</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb fade-up"><a href="index.html">Home</a> <span>/</span> <span class="current">Get Quote</span></div>
+      <h1 class="fade-up">Get a Free Moving Estimate</h1>
+      <p class="fade-up">Fill out the details below and our team will get back to you with an honest, transparent, and affordable quote in 30 minutes.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="quote-section">
+        
+        <div class="quote-form-wrapper fade-up">
+          <h2>Request Your Quote</h2>
+          <p>No hidden charges. 100% transparent pricing.</p>
+          
+          <form data-form="main-quote">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="q-name">Full Name *</label>
+                <input type="text" id="q-name" name="name" required>
+              </div>
+              <div class="form-group">
+                <label for="q-phone">Phone Number *</label>
+                <input type="tel" id="q-phone" name="phone" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="q-email">Email Address</label>
+              <input type="email" id="q-email" name="email">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="q-from">Moving From (City/Area) *</label>
+                <input type="text" id="q-from" name="from" required>
+              </div>
+              <div class="form-group">
+                <label for="q-to">Moving To (City/Area) *</label>
+                <input type="text" id="q-to" name="to" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="q-date">Expected Shifting Date *</label>
+                <input type="date" id="q-date" name="date" required>
+              </div>
+              <div class="form-group">
+                <label for="q-type">Move Type *</label>
+                <select id="q-type" name="type" required>
+                  <option value="" disabled selected>Select moving type</option>
+                  <option value="1bhk">1 BHK House</option>
+                  <option value="2bhk">2 BHK House</option>
+                  <option value="3bhk">3 BHK or larger</option>
+                  <option value="office">Office/Commercial</option>
+                  <option value="vehicle">Car / Bike Transport</option>
+                  <option value="few-items">Few Items / Parcel</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="q-msg">Additional Requirements (Optional)</label>
+              <textarea id="q-msg" name="message" placeholder="E.g., Need storage for 1 month, dismantling of AC required, etc."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Calculate My Quote</button>
+          </form>
+
+          <div class="form-success">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="#16a34a"/></svg>
+            <h3>Thank You!</h3>
+            <p>We've received your requirements. A relocation expert will call you shortly.</p>
+          </div>
+        </div>
+
+        <div class="pricing-info fade-up">
+          <h3>How we calculate your quote</h3>
+          
+          <div class="pricing-factors">
+            <div class="pricing-factor">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 9h-2V7h-2v5H6v2h2v5h2v-5h2v-2z"/></svg>
+              <div>
+                <p><strong>Volume of Goods</strong></p>
+                <p class="text-light">The size of the truck and amount of packing material depend entirely on how much stuff you have.</p>
+              </div>
+            </div>
+            <div class="pricing-factor">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+              <div>
+                <p><strong>Distance to Destination</strong></p>
+                <p class="text-light">Fuel costs and toll taxes are factored in based on the exact distance between pickup and drop locations.</p>
+              </div>
+            </div>
+            <div class="pricing-factor">
+              <svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+              <div>
+                <p><strong>Floor & Lift Availability</strong></p>
+                <p class="text-light">Moving items from a 4th floor without a lift requires more manpower and effort compared to ground floor.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="background:var(--primary);color:white;">
+            <h4 style="color:white;margin-bottom:10px;">Need immediate assistance?</h4>
+            <p style="color:rgba(255,255,255,0.8);font-size:0.9rem;margin-bottom:15px;">Call our 24/7 hotline to get an instant estimate over the phone.</p>
+            <a href="tel:+919643990522" class="btn btn-white" style="width:100%;">Call +91 96439 90522</a>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo"><img src="images/logo.webp" alt="iMove Packers & Movers" class="logo-img"></a>
+          <p>iMove Packers and Movers is Delhi NCR's most trusted relocation partner. We provide safe, affordable, and on-time moving services for homes, offices, and vehicles across India.</p>
+        </div>
+
+        <div>
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="services.html">Services</a>
+            <a href="pricing.html">Get Quote</a>
+            <a href="testimonials.html">Testimonials</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Our Services</h4>
+          <div class="footer-links">
+            <a href="services.html#house-shifting">House Shifting</a>
+            <a href="services.html#office-relocation">Office Relocation</a>
+            <a href="services.html#vehicle-transport">Vehicle Transport</a>
+            <a href="services.html#packing">Packing & Unpacking</a>
+            <a href="services.html#storage">Storage Services</a>
+            <a href="services.html#bike-transport">Bike Transport</a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Contact Info</h4>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            <p>Wz-588A, street no 21, Shiv Nagar Extension, New Delhi 110058</p>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.21 2.2z"/></svg>
+            <p><a href="tel:+919643990522">+91 96439 90522</a></p>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <p><a href="mailto:info@imovepackers.in">info@imovepackers.in</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 iMove Packers and Movers. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+      </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
