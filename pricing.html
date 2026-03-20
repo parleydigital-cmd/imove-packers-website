@@ -42,15 +42,17 @@
           <h2>Request Your Quote</h2>
           <p>No hidden charges. 100% transparent pricing.</p>
           
-          <form data-form="main-quote">
+          <form id="quote-page-form" novalidate>
             <div class="form-row">
               <div class="form-group">
                 <label for="q-name">Full Name *</label>
                 <input type="text" id="q-name" name="name" required>
+                <div class="error-msg" id="err-q-name" style="color:#dc2626; font-size:0.8rem; margin-top:4px; display:none;"></div>
               </div>
               <div class="form-group">
                 <label for="q-phone">Phone Number *</label>
                 <input type="tel" id="q-phone" name="phone" required>
+                <div class="error-msg" id="err-q-phone" style="color:#dc2626; font-size:0.8rem; margin-top:4px; display:none;"></div>
               </div>
             </div>
             
@@ -63,10 +65,12 @@
               <div class="form-group">
                 <label for="q-from">Moving From (City/Area) *</label>
                 <input type="text" id="q-from" name="from" required>
+                <div class="error-msg" id="err-q-from" style="color:#dc2626; font-size:0.8rem; margin-top:4px; display:none;"></div>
               </div>
               <div class="form-group">
                 <label for="q-to">Moving To (City/Area) *</label>
                 <input type="text" id="q-to" name="to" required>
+                <div class="error-msg" id="err-q-to" style="color:#dc2626; font-size:0.8rem; margin-top:4px; display:none;"></div>
               </div>
             </div>
 
@@ -74,6 +78,7 @@
               <div class="form-group">
                 <label for="q-date">Expected Shifting Date *</label>
                 <input type="date" id="q-date" name="date" required>
+                <div class="error-msg" id="err-q-date" style="color:#dc2626; font-size:0.8rem; margin-top:4px; display:none;"></div>
               </div>
               <div class="form-group">
                 <label for="q-type">Move Type *</label>
@@ -86,6 +91,7 @@
                   <option value="vehicle">Car / Bike Transport</option>
                   <option value="few-items">Few Items / Parcel</option>
                 </select>
+                <div class="error-msg" id="err-q-type" style="color:#dc2626; font-size:0.8rem; margin-top:4px; display:none;"></div>
               </div>
             </div>
 
@@ -94,13 +100,15 @@
               <textarea id="q-msg" name="message" placeholder="E.g., Need storage for 1 month, dismantling of AC required, etc."></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Calculate My Quote</button>
+            <div id="quote-global-error" style="color:#dc2626; font-size:0.9rem; margin-bottom:15px; display:none; font-weight:600;"></div>
+
+            <button type="submit" id="quote-submit-btn" class="btn btn-primary btn-lg" style="width:100%">Calculate My Quote</button>
           </form>
 
-          <div class="form-success">
-            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="#16a34a"/></svg>
-            <h3>Thank You!</h3>
-            <p>We've received your requirements. A relocation expert will call you shortly.</p>
+          <div class="form-success" id="quote-success" style="display:none; text-align:center; padding: 2rem;">
+            <svg viewBox="0 0 24 24" style="width:64px;height:64px;margin:0 auto 1rem;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="#16a34a"/></svg>
+            <h3 style="color:#16a34a;margin-bottom:0.5rem;">Thank You!</h3>
+            <p>We've received your requirements. A relocation expert will call you within 30 minutes.</p>
           </div>
         </div>
 
@@ -197,5 +205,115 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <!-- EmailJS Integration -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init("VNvc8Ts4cEj_L0b1R");
+    })();
+
+    document.getElementById('quote-page-form')?.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Clear previous errors
+      document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+      const globalError = document.getElementById('quote-global-error');
+      globalError.style.display = 'none';
+
+      const name = document.getElementById('q-name').value.trim();
+      const phone = document.getElementById('q-phone').value.trim();
+      const email = document.getElementById('q-email').value.trim();
+      const from = document.getElementById('q-from').value.trim();
+      const to = document.getElementById('q-to').value.trim();
+      const date = document.getElementById('q-date').value;
+      const moveType = document.getElementById('q-type').value;
+      const message = document.getElementById('q-msg').value.trim();
+
+      let isValid = true;
+
+      // Validate Name
+      if (name.length < 2) {
+        let err = document.getElementById('err-q-name');
+        err.textContent = "Please enter a valid Name (min 2 characters).";
+        err.style.display = "block";
+        isValid = false;
+      }
+
+      // Validate Phone (10 digit Indian Mobile)
+      const phoneDigits = phone.replace(/\D/g, '');
+      if (phoneDigits.length !== 10) {
+        let err = document.getElementById('err-q-phone');
+        err.textContent = "Please enter a valid 10-digit mobile number.";
+        err.style.display = "block";
+        isValid = false;
+      }
+
+      // Validate From
+      if (from.length === 0) {
+        let err = document.getElementById('err-q-from');
+        err.textContent = "Please specify where you are moving from.";
+        err.style.display = "block";
+        isValid = false;
+      }
+
+      // Validate To
+      if (to.length === 0) {
+        let err = document.getElementById('err-q-to');
+        err.textContent = "Please specify where you are moving to.";
+        err.style.display = "block";
+        isValid = false;
+      }
+
+      // Validate Date
+      if (!date) {
+        let err = document.getElementById('err-q-date');
+        err.textContent = "Please select an expected shifting date.";
+        err.style.display = "block";
+        isValid = false;
+      }
+
+      // Validate Move Type
+      if (!moveType) {
+        let err = document.getElementById('err-q-type');
+        err.textContent = "Please select a move type.";
+        err.style.display = "block";
+        isValid = false;
+      }
+
+      // Stop if invalid
+      if (!isValid) return;
+
+      const btn = document.getElementById('quote-submit-btn');
+      const originalText = btn.textContent;
+      btn.textContent = "Sending...";
+      btn.disabled = true;
+
+      // Assemble Template Parameters
+      const templateParams = {
+        name: name,
+        phone: phone,
+        from: from,
+        to: to,
+        requirements: (moveType ? 'Move Type: ' + moveType + '. ' : '') + (date ? 'Shifting Date: ' + date + '. ' : '') + (email ? 'Email: ' + email + '. ' : '') + (message || 'None provided'),
+        submitted_at: new Date().toLocaleString()
+      };
+
+      emailjs.send('service_57tq7ug', 'template_zpf3n3c', templateParams)
+        .then(function(response) {
+           console.log('SUCCESS!', response.status, response.text);
+           document.getElementById('quote-page-form').style.display = 'none';
+           document.getElementById('quote-success').style.display = 'block';
+           btn.textContent = originalText;
+           btn.disabled = false;
+        }, function(error) {
+           console.log('FAILED...', error);
+           globalError.textContent = "Something went wrong. Please call us directly at +91 96439 90522.";
+           globalError.style.display = 'block';
+           btn.textContent = originalText;
+           btn.disabled = false;
+        });
+    });
+  </script>
 </body>
 </html>

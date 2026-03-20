@@ -629,7 +629,7 @@
   <script type="text/javascript">
     (function(){
       // 1. Initialize EmailJS with your Public Key
-      emailjs.init("YOUR_PUBLIC_KEY_HERE");
+      emailjs.init("VNvc8Ts4cEj_L0b1R");
     })();
 
     document.getElementById('emailjs-quote-form')?.addEventListener('submit', function(event) {
@@ -700,7 +700,7 @@
       };
 
       // 2. Send Email (Replace Service ID and Template ID)
-      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      emailjs.send('service_57tq7ug', 'template_zpf3n3c', templateParams)
         .then(function(response) {
            console.log('SUCCESS!', response.status, response.text);
            document.getElementById('emailjs-quote-form').style.display = 'none';
