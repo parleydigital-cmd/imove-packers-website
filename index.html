@@ -42,6 +42,13 @@
   </script>
 
   <link rel="stylesheet" href="css/styles.css">
+  <!-- EmailJS SDK (loaded in head for global availability) -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      emailjs.init("VNvc8Ts4cEj_L0b1R");
+    })();
+  </script>
 </head>
 <body>
 
@@ -167,6 +174,7 @@
           
           <div id="emailjs-global-error" style="color:#dc2626; font-size:0.9rem; margin-bottom:15px; display:none; font-weight:600;"></div>
           
+          <input type="hidden" name="submitted_at" id="hero-submitted-at" value="">
           <button type="submit" id="emailjs-submit-btn" class="btn btn-accent btn-lg" style="width:100%;">Get Free Quote →</button>
         </form>
 
@@ -624,95 +632,84 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script src="js/main.js"></script>
 
-  <!-- EmailJS Integration -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <!-- EmailJS Form Submission Logic -->
   <script type="text/javascript">
-    (function(){
-      // 1. Initialize EmailJS with your Public Key
-      emailjs.init("VNvc8Ts4cEj_L0b1R");
-    })();
-
     document.getElementById('emailjs-quote-form')?.addEventListener('submit', function(event) {
       event.preventDefault();
 
       // Clear previous errors
-      document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
-      const globalError = document.getElementById('emailjs-global-error');
+      document.querySelectorAll('.error-msg').forEach(function(el) { el.style.display = 'none'; });
+      var globalError = document.getElementById('emailjs-global-error');
       globalError.style.display = 'none';
 
-      const name = document.getElementById('hero-name').value.trim();
-      const phone = document.getElementById('hero-phone').value.trim();
-      const from = document.getElementById('hero-from').value.trim();
-      const to = document.getElementById('hero-to').value.trim();
-      const reqs = document.getElementById('hero-reqs').value.trim();
+      var name = document.getElementById('hero-name').value.trim();
+      var phone = document.getElementById('hero-phone').value.trim();
+      var from = document.getElementById('hero-from').value.trim();
+      var to = document.getElementById('hero-to').value.trim();
 
-      let isValid = true;
+      var isValid = true;
 
       // Validate Name
       if (name.length < 2) {
-        let err = document.getElementById('err-hero-name');
-        err.textContent = "Please enter a valid Name (min 2 characters).";
-        err.style.display = "block";
+        var err = document.getElementById('err-hero-name');
+        err.textContent = 'Please enter a valid Name (min 2 characters).';
+        err.style.display = 'block';
         isValid = false;
       }
 
       // Validate Phone (10 digit Indian Mobile)
-      const phoneDigits = phone.replace(/\D/g, '');
+      var phoneDigits = phone.replace(/\D/g, '');
       if (phoneDigits.length !== 10) {
-        let err = document.getElementById('err-hero-phone');
-        err.textContent = "Please enter a valid 10-digit mobile number.";
-        err.style.display = "block";
+        var err2 = document.getElementById('err-hero-phone');
+        err2.textContent = 'Please enter a valid 10-digit mobile number.';
+        err2.style.display = 'block';
         isValid = false;
       }
 
       // Validate From
       if (from.length === 0) {
-        let err = document.getElementById('err-hero-from');
-        err.textContent = "Please specify where you are moving from.";
-        err.style.display = "block";
+        var err3 = document.getElementById('err-hero-from');
+        err3.textContent = 'Please specify where you are moving from.';
+        err3.style.display = 'block';
         isValid = false;
       }
 
       // Validate To
       if (to.length === 0) {
-        let err = document.getElementById('err-hero-to');
-        err.textContent = "Please specify where you are moving to.";
-        err.style.display = "block";
+        var err4 = document.getElementById('err-hero-to');
+        err4.textContent = 'Please specify where you are moving to.';
+        err4.style.display = 'block';
         isValid = false;
       }
 
       // Stop if invalid
       if (!isValid) return;
 
-      const btn = document.getElementById('emailjs-submit-btn');
-      const originalText = btn.textContent;
-      btn.textContent = "Sending...";
+      var btn = document.getElementById('emailjs-submit-btn');
+      var originalText = btn.textContent;
+      btn.textContent = 'Sending...';
       btn.disabled = true;
 
-      // Assemble Template Parameters
-      const templateParams = {
-        name: name,
-        phone: phone,
-        from: from,
-        to: to,
-        requirements: reqs || "None provided",
-        submitted_at: new Date().toLocaleString()
-      };
+      // Set the submitted_at hidden field value
+      document.getElementById('hero-submitted-at').value = new Date().toLocaleString();
 
-      // 2. Send Email (Replace Service ID and Template ID)
-      emailjs.send('service_57tq7ug', 'template_zpf3n3c', templateParams)
+      // Use emailjs.sendForm — passes the form element directly to EmailJS
+      // The name attributes on HTML inputs must match the EmailJS template variables
+      emailjs.sendForm('service_57tq7ug', 'template_zpf3n3c', this)
         .then(function(response) {
-           console.log('SUCCESS!', response.status, response.text);
-           document.getElementById('emailjs-quote-form').style.display = 'none';
-           document.getElementById('emailjs-success').style.display = 'block';
-           btn.textContent = originalText;
-           btn.disabled = false;
-        }, function(error) {
-           console.log('FAILED...', error);
-           globalError.textContent = "Something went wrong. Please call us directly at +91 96439 90522.";
-           globalError.style.display = 'block';
-           btn.textContent = originalText;
-           btn.disabled = false;
+          console.log('EmailJS SUCCESS:', response.status, response.text);
+          document.getElementById('emailjs-quote-form').style.display = 'none';
+          document.getElementById('emailjs-success').style.display = 'block';
+          btn.textContent = originalText;
+          btn.disabled = false;
+        })
+        .catch(function(error) {
+          console.error('EmailJS FAILED — Full error object:', error);
+          console.error('Error text:', error.text || error.message || JSON.stringify(error));
+          globalError.textContent = 'Something went wrong. Please call us directly at +91 96439 90522.';
+          globalError.style.display = 'block';
+          btn.textContent = originalText;
+          btn.disabled = false;
         });
     });
   </script>
