@@ -6,7 +6,25 @@
   <title>Contact Us | iMove Packers and Movers</title>
   <link rel="icon" href="images/logo.webp">
   <meta name="description" content="Contact iMove Packers and Movers for the best relocation services. Wz-588A, street no 21, Shiv Nagar Extension, New Delhi 110058. Call +91 96439 90522.">
+  <meta name="keywords" content="contact packers and movers, packers and movers number, imove customer care, relocation support delhi">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://imovepackers.in/contact.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Contact Us | iMove Packers and Movers">
+  <meta property="og:description" content="Contact iMove Packers and Movers for the best relocation services. Wz-588A, street no 21, Shiv Nagar Extension, New Delhi 110058. Call +91 96439 90522.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://imovepackers.in/contact.html">
+  <meta property="og:image" content="https://imovepackers.in/images/logo.webp">
+
   <link rel="stylesheet" href="css/styles.css">
+  <!-- EmailJS SDK (loaded in head for global availability) -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      emailjs.init("VNvc8Ts4cEj_L0b1R");
+    })();
+  </script>
 </head>
 <body class="section-alt">
 
@@ -69,21 +87,37 @@
 
         <div class="contact-form-wrapper fade-up">
           <h2>Send a Message</h2>
-          <form data-form="contact">
+          <form id="contact-page-form" novalidate>
             <div class="form-group">
               <label for="c-name">Full Name *</label>
-              <input type="text" id="c-name" required>
+              <input type="text" id="c-name" name="name" required>
+              <span class="error-msg" id="err-c-name" style="color:#ff6b00; font-size:0.8rem; display:none; margin-top:4px;"></span>
             </div>
             <div class="form-group">
               <label for="c-phone">Phone Number *</label>
-              <input type="tel" id="c-phone" required>
+              <input type="tel" id="c-phone" name="phone" required>
+              <span class="error-msg" id="err-c-phone" style="color:#ff6b00; font-size:0.8rem; display:none; margin-top:4px;"></span>
             </div>
             <div class="form-group">
               <label for="c-msg">Message *</label>
-              <textarea id="c-msg" required></textarea>
+              <textarea id="c-msg" name="requirements" required></textarea>
+              <span class="error-msg" id="err-c-msg" style="color:#ff6b00; font-size:0.8rem; display:none; margin-top:4px;"></span>
             </div>
-            <button class="btn btn-primary" style="width:100%;">Send Message</button>
+
+            <div id="contact-global-error" style="color:#dc2626; font-size:0.9rem; margin-bottom:15px; display:none; font-weight:600;"></div>
+            
+            <input type="hidden" name="from" value="Contact Us Page">
+            <input type="hidden" name="to" value="N/A">
+            <input type="hidden" name="submitted_at" id="c-submitted-at" value="">
+
+            <button type="submit" id="contact-submit-btn" class="btn btn-primary" style="width:100%;">Send Message</button>
           </form>
+
+          <div class="form-success" id="contact-success" style="display:none; text-align:center; padding: 2rem;">
+            <svg viewBox="0 0 24 24" style="width:64px;height:64px;margin:0 auto 1rem;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="#16a34a"/></svg>
+            <h3 style="color:#16a34a;margin-bottom:0.5rem;">Thank You!</h3>
+            <p>We've received your message. Our team will contact you shortly.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -147,5 +181,77 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <!-- EmailJS Form Submission Logic -->
+  <script type="text/javascript">
+    document.getElementById('contact-page-form')?.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Clear previous errors
+      document.querySelectorAll('#contact-page-form .error-msg').forEach(function(el) { el.style.display = 'none'; });
+      var globalError = document.getElementById('contact-global-error');
+      globalError.style.display = 'none';
+
+      var name = document.getElementById('c-name').value.trim();
+      var phone = document.getElementById('c-phone').value.trim();
+      var msg = document.getElementById('c-msg').value.trim();
+
+      var isValid = true;
+
+      // Validate Name
+      if (name.length < 2) {
+        var err = document.getElementById('err-c-name');
+        err.textContent = 'Please enter a valid Name (min 2 characters).';
+        err.style.display = 'block';
+        isValid = false;
+      }
+
+      // Validate Phone (10 digit Indian Mobile)
+      var phoneDigits = phone.replace(/\D/g, '');
+      if (phoneDigits.length !== 10) {
+        var err2 = document.getElementById('err-c-phone');
+        err2.textContent = 'Please enter a valid 10-digit mobile number.';
+        err2.style.display = 'block';
+        isValid = false;
+      }
+      
+      // Validate Message
+      if (msg.length === 0) {
+        var err3 = document.getElementById('err-c-msg');
+        err3.textContent = 'Please enter your message.';
+        err3.style.display = 'block';
+        isValid = false;
+      }
+
+      // Stop if invalid
+      if (!isValid) return;
+
+      var btn = document.getElementById('contact-submit-btn');
+      var originalText = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      // Set the submitted_at hidden field value
+      document.getElementById('c-submitted-at').value = new Date().toLocaleString();
+
+      // Use emailjs.sendForm
+      emailjs.sendForm('service_57tq7ug', 'template_zpf3n3c', this)
+        .then(function(response) {
+          console.log('EmailJS SUCCESS:', response.status, response.text);
+          document.getElementById('contact-page-form').style.display = 'none';
+          document.getElementById('contact-success').style.display = 'block';
+          btn.textContent = originalText;
+          btn.disabled = false;
+        })
+        .catch(function(error) {
+          console.error('EmailJS FAILED — Full error object:', error);
+          console.error('Error text:', error.text || error.message || JSON.stringify(error));
+          globalError.textContent = 'Something went wrong. Please call us directly at +91 96439 90522.';
+          globalError.style.display = 'block';
+          btn.textContent = originalText;
+          btn.disabled = false;
+        });
+    });
+  </script>
 </body>
 </html>
