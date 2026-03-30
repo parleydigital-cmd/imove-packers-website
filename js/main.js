@@ -1,5 +1,5 @@
-/* ═══════════════════════════════════════════════
-   iMove Packers & Movers — Main JavaScript
+﻿/* ═══════════════════════════════════════════════
+   imove Packers & Movers — Main JavaScript
    ═══════════════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', () => {
