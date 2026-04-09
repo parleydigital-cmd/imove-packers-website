@@ -322,8 +322,18 @@
       // Set the submitted_at hidden field value
       document.getElementById('q-submitted-at').value = new Date().toLocaleString();
 
-      // Use emailjs.sendForm — passes the form element directly to EmailJS
-      emailjs.sendForm('service_z8yzkdf', 'template_u8amrom', this)
+      var templateParams = {
+        user_name: name,
+        user_phone: phone,
+        user_email: 'Not Provided',
+        move_type: moveType,
+        from_city: from,
+        to_city: to,
+        user_message: "Preferred Date: " + date
+      };
+
+      // Use emailjs.send
+      emailjs.send('service_z8yzkdf', 'template_u8amrom', templateParams)
         .then(function(response) {
           console.log('EmailJS SUCCESS:', response.status, response.text);
           document.getElementById('quote-page-form').style.display = 'none';
